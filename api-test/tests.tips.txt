@@ -1,0 +1,4 @@
+1 - Instalar pacote REST Client e criar os arquivos .http para testar as rotas.
+2 - Atenção para Content-Type, e outros itens do cabeçalho para não usar ASPAS
+Content-Type: application/json => certo
+Content-Type: "application/json" => errado

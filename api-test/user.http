@@ -1,0 +1,32 @@
+###
+POST http://localhost:8000/users/register
+Content-Type: application/json
+
+{ 
+    "name": "Nathi",
+    "email": "nathigata@gmail.com",
+    "username": "nathix",
+    "password": "nathi123",
+    "type": "USER"
+}
+
+###
+GET http://localhost:8000/users/find-by-email
+Content-Type: application/json
+
+{ "email": "nathilinda@gmail.com"}
+
+###
+GET http://localhost:8000/users/listall
+Content-Type: application/json
+
+
+###
+GET http://localhost:8000/users/change-password
+Content-Type: application/json
+
+{ 
+    "email": "nathigata@gmail.com",
+    "oldpassword": "nathi123",
+    "newpassword": "nathi456"
+}

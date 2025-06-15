@@ -1,0 +1,73 @@
+1 - Pense nas camadas sempre da mais interna para a mais externa:
+    MODEL [ ENTIDADES => REPOSITORIO => SERVICO ]
+    CONTROLLER [ Orquestrador que recebe as requisições do frontend e dispara as ações da camada de SERVIÇO ]
+    VIEW (FrontEnd)
+
+    * ENTIDADE: representa um objeto do domínio que está sendo tratado
+        * O REPOSITÓRIO faz a interface EXTERNA, seja com outras APIS ou com o Banco de Dados para implementar a persistência
+        * Os SERVIÇOS aplicam regras de negócio 
+
+    * Prisma tips: sempre que alterar o modelo de dados no arquivo de schema do prisma executar:
+      npx prisma generate
+
+2 - Entidades:
+    2.1 Definir o tipo que corresponde as propriedades da entidade (campo e tipos de dados) => ProductProps
+    2.2 Definir a Classe para a Entidade:
+        * Constructor recebe as Props como parâmetro
+        * Métodos getter e setter para cada campo
+        * Método CREATE que cria efetivamente um novo ELEMENTO da ENTIDADE (novo Produto) e retorna uma nova instância da Classe.
+            * Aqui que é criado o novo id do elemento
+        * Método WITH: é um método estático que instancia da classe. Este é o método que deve ser chamado externamente 
+          por que garante que a criação de uma nova instância de forma padronizada. Pode-se incluir nesse método validações 
+          de campos e regras de negócio que afetam os campos.
+        * Métodos de USE CASES mais simples, relacionados especificamente aos campos da entidade/classe.
+3 - Repositório:
+    * O repositório é uma espécie de diretório dos métodos que acessa os métodos da classe que representa a entidade.
+    * Para cada entidade, define-se um repositório <ENTIDADE.REPOSITORY> através da criação de uma interface que tem os métodos 
+      acessíveis da classe da Entidade.
+    * Os métodos dessa interface referenciam a Classe da Entidade (Product.Repository)
+    * O repositório é quem faz acesso a camada de persistência de Dados, seja um Banco de Dados, CRM, etc
+      através da implementação de um Adapter. Podemos usar o Prisma como adapter e definir dentro dele
+      o as tabelas tais quais serão salvas no banco de dados. Criamos o ENTIDADE.REPOSITORY.PRISMA que
+      terá os métodos que fazem a persistência de dados. Dentro da interface do prisma é que vamos definir
+      qual o banco de dados será acessado, conexão, etc, deixando a persistência de dados totalmente transparente e 
+      independente.
+      * Repositório fará acesso as APIs externas, como por exemplo as rotas do CRM.
+4 - Serviços:
+    * O serviço é quem vai implementar realmente os métodos que foram definidos no repositório.
+    * Define-se uma INTERFACE para o SERVIÇO, que tem os métodos que serão disponibilizados externamente. 
+      Para cada método que retorna dados, devemos definir os DTOs que são TIPOS com os dados que serão trocados entre as camadas.
+    * A IMPLEMENTAÇÃO do SERVIÇO fica em arquivo separado <ENTIDADE.SERVICE.IMPLEMENTATION>, criando uma classe 
+      EntidadeServiceImplementation que IMPLEMENTA a INTERFACE de SERVIÇO que definimos acima.
+        * Constructor recebe a classe do REPOSITORIO como parâmetro.
+        * Os métodos dessa classe são os mesmos que existem no repositório e internamente usa-se
+            this.repository.metodo
+        * Também serão usados os DTOs que foram definidos no SERVICO
+        * Criar um método de BUILD que recebe o Repositório como parâmetro e instancia a classe de implementação do Serviço.
+    * O Serviço também é usado para desacoplar por exemplo o CRM: crio um serviço de Criar Lead que vai usar a classe de repositório, e esta classe vai tratar 
+    de chamar a implementação de repositório corrente para o CRM. 
+5 - Factories:
+    * A Factory é uma classe facilitadora para "Fabricar" alguma coisa e garantir que seja criado e instanciado sempre na mesma sequencia de passos. 
+    Por exemplo, neste projeto, para criar o serviço de usuários (UserService), é necessário:
+      1 - Instanciar a classe do repositório implementado no ORM (UserRepositoryPrisma), que recebe como parâmetro o PRISMACLIENT e é o nível mais externo e faz uso dos métodos do ORM para implementar os métodos do repositório 
+      2 - Instanciar a classe da implementação do repositório (UserRepositoryImplementation, um nível acima na abstração) e que recebe injeção de dependência da classe que implementa o ORM
+      3 - Instanciar a classe do servico (UserServiceImplementation) que recebe injeção de dependência da classe UserRepositoryImplementation
+    A maneira de garantir que esses passos sejam seguidos e eliminar a necessidade de se repetir esse código a cada vez que se precisa instanciar o UserService foi incluir 
+    tudo em uma classe UserServiceFactory.
+6 - Controllers:
+    * O Controller é o orquestrador de tudo. Aqui definimos os métodos que vão sustentar as rotas da api.
+    * O controller recebe a requisição, trata os dados de entrada, faz as chamadas aos métodos da Classe 
+      de implementação do SERVIÇO e retorna os dados resultantes da requisição.
+    * Para isso temos que instanciar dentro do controller:
+        * Repositório (implementado pela classe do Prisma ou do Adapter);
+        * Serviço (implementado pela classe de implementação do Serviço) que recebe a instância da classe 
+          do repositório
+        * Chamar os métodos das classes de serviço necessários.
+7 - Classe API: 
+    * É a classe que implementa a APP, instanciando o express através do método de BUILD.
+    * Definimos nessa classe um método START que vai inicializar a API, fazendo o server escutar as requisiçÕes na porta definida.
+    * Métodos de criação genérico de rotas de GET, POST, etc.
+8 - Main.ts
+    * É o script de inicialização da API, que instancia a Classe API, cria os controllers, e adiciona as rotas usando os métodos da Classe API.
+
+    

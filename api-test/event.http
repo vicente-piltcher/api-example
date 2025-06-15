@@ -1,0 +1,12 @@
+POST http://localhost:8000/events/create
+Content-Type: application/json
+
+{
+    "name": "Evento 1",
+    "startDate": "10/10/2024",
+    "endDate": "20/10/2024",
+    "location": "Porto Alegre", 
+    "bannerUrl": "https://teste.minhaurl.com",
+    "registrationRequired": true,
+    "allStores": true
+}

@@ -1,0 +1,16 @@
+MODEL - VIEW - CONTROLLER
+
+Design Pattern que divide a aplicação em três camadas: Model, Controller e VIEW
+
+1 - View: camada mais externa que faz a entrada e saída de dados. Normalmente corresponde ao Front-End que captura os dados dos usuários. 
+    A camada de view faz uma requisição para o Controller (pode ser uma requisição HTTP no modelo cliente/servidor que envia um JSON).
+
+2 - Controller: É a camada que recebe os dados e as requisições. Recebe a requisição, entende o pedido e envia para a camada MODEL.
+
+3 - Model: o model está divido em diferentes partes.
+    3.1 - Service: é a camada que recebe os dados vindos do Controller. É onde estão as regras do controle de fluxo da sua aplicação. 
+    É o orquestrador, que faz uso das ENTIDADES e do REPOSITÓRIO. 
+    3.2 - Entidade: tem a definição das regras de negócio da aplicação.
+    3.3 - Repositório: implementa a camada de persistência da aplicação, salva e obtém dados do banco de dados.
+
+4 - DTO: data transfer object, é o formato dos dados que transitam entre as camadas.

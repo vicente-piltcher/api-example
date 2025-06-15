@@ -1,0 +1,48 @@
+Entidades:
+* clientes
+* pedidos
+* simulações
+* regrasSimulacao
+* produtos
+* InstituiçõesFinanceiras
+
+clients
+    clientId
+    name
+    phoneNumber
+    personalTaxPayerId
+    email
+    createdAt
+
+clientsData
+    address
+        streetName
+        number
+        complement
+        neighboorhood
+        city
+        state
+    nationality
+    dateOfBirth
+    motherName
+    nationalIdNumber
+
+simulations
+    simulationId
+    personalTaxPayerId
+    bankCode
+    interestTable
+    interestRate
+    numberInstallments
+    netAmount
+    grossAmount
+    iofRate
+    iofValue
+
+simulationsInstallments
+    simulationId
+    installments {
+        date
+        value
+    }
+

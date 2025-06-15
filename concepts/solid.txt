@@ -1,0 +1,6 @@
+SOLID
+    S - Single Responsability: toda classe deveria ter apenas UMA razão para EXISTIR/SER MODIFICADA. Classes que fazem muitas coisas devem ser divididas em classes menores.
+    O - Open-Closed: toda classe deveria estar fechada para alteração e aberta para EXTENSÃO. Novas funcionalidades devem extender as classes existentes e não alterá-las.
+    L - Liskov (Substituicao de Liskov): toda classe deveria poder ser substituída por uma classe filha. Ou seja, se um metodo usa uma classe pai, poderá receber uma classe filha sem causar erro.
+    I - Interface Segregation: a implementação de uma interface deve implementar todos os métodos, assim todos os métodos de uma classe pai devem poder ser usados nas classes filhas, quando isso não acontece, devemos quebrar a classe pai em outras classes.
+    D - Dependency Inversion: uma classe deveria depender de uma abstração e não de uma implementação concreta. Quando dentro de um método tem que criar uma nova classe por exemplo, pode ser que esse método já tenha que receber essa classe como parâmetro ou pelo construtor.

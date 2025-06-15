@@ -1,0 +1,16 @@
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+    "username": "nathix",
+    "email": "nathigata@gmail.com",
+    "password": "nathi456"
+}
+
+###
+POST http://localhost:8000/auth/refresh-token
+Content-Type: application/json
+
+{ 
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJhZDUwZjdkMC0zMGMwLTRiNDctODdmMy1hMmM5NWI3MzczNmMiLCJwYXNzd29yZCI6IiQyYiQxMCRGRWVNRVVkSlFyQ1ducW90RHdUNmx1MUZBc2dMY2xMTUM3QXhZZDZjbk9kYmxlQzhyY3ZQMiIsImlhdCI6MTcyODkyNTY4NSwiZXhwIjoxNzI4OTI5Mjg1fQ.qhCJvPFKL7AhAdXBxKBhJeG7wVJ2neA7U70aFLPMyqk"
+}

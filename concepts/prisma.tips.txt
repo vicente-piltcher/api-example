@@ -1,0 +1,2 @@
+npx prisma generate: executar sempre que o schema do prisma sofrer alteração
+npx prisma studio: permite abrir o app do prisma no browser (http://localhost:5555)

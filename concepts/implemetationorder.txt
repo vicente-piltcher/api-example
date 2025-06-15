@@ -1,0 +1,26 @@
+1) entity_name.ts: 
+	* type com as Props da Entidade
+	* método de create (usando quando precisa criar um novo registro, inicializar os campos com valor default, campo de id, etc)
+	* método with: para instanciar um elemento da entidade que já existe no banco de dados e cujos valores dos campos já são conhecidos
+	* getters: um para cada prop, para que os atributos da entidade sejam visíveis quando se usa a instância da classe. São necessários se os atributos do objeto forem declarados dentro do props. Se usar direto dentro do constructor não precisa.
+2) entity.repository.ts: arquivo com a interface declarando os métodos que implementarão a camada de persistência
+3) entity_name.repository.prisma.ts: 
+	* recebe o client do Prisma como parâmetro
+	* implementa os métodos do CRUD da entidade acessando a Classe e os métodos do Prisma
+	* método de BUILD que instancia a Classe do Repositório
+4) entity_name.service.ts: 
+	* declaração da interface do serviço que vai listar os métodos que implementam os casos de uso que agem sobre a entidade
+	* define os types que representam as saídas de dados do serviço (DTOs)
+5) entity_name.service.implementation.ts: 
+	* implementa a Classe de Serviço da Entidade cuja interface foi definida no passo 4.
+	* constructor recebe o o REPOSITORIO como parâmetro
+	* método build para instanciar a Classe do Serviço
+	* métodos com os casos de uso da entidade
+6) entity_name.controller:
+	* orchestrador, REQUEST, RESPONSE
+	* adicionar as ROTAS e os controllers que as tratam no main.ts (pode criar um arquivo separado de ROUTES para ficar mais claro)
+	* recebe os dados do front-end, formata o que for preciso e chama o serviço necessário
+	* dentro do controller vai instanciar a classe que implementa o REPOSITÓRIO para ser usado SERVICO
+	* recebe o resultado do serviço e retorna as respostas para o front-end 
+
+SUgestão: Documentar a estrutura de pastas também no README da agafarma
